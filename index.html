@@ -2,23 +2,23 @@
 <html>
   <head>
     <title>Network Speed Test</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  </head>
-  <body>
-    <div class="container mt-5">
-      <h1 class="text-center mb-5">Network Speed Test</h1>
-      <p class="lead">Click the button below to test your network speed:</p>
-      <button class="btn btn-primary" onclick="testSpeed()">Test Speed</button>
-      <div id="results" class="mt-5"></div>
-    </div>
-    
     <script>
       function testSpeed() {
-        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        const speedMbps = (connection.downlink / 1000000).toFixed(2);
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = `<p>Your network speed is <strong>${speedMbps} Mbps</strong>.</p>`;
+        const startTime = performance.now();
+        const img = new Image();
+        img.onload = () => {
+          const endTime = performance.now();
+          const duration = endTime - startTime;
+          const speed = (img.fileSize * 8 / (duration / 1000)) / 1000000; // Mbps
+          const result = document.getElementById('result');
+          result.innerText = `Your network speed is: ${speed.toFixed(2)} Mbps`;
+        };
+        img.src = 'https://example.com/image.jpg'; // Replace with the URL of the resource you want to test
       }
     </script>
+  </head>
+  <body>
+    <button onclick="testSpeed()">Test Network Speed</button>
+    <div id="result"></div>
   </body>
 </html>
